@@ -1,0 +1,13 @@
+#characters{
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  padding: 5px;
+
+}
+.micharacter{
+  display: flex;
+  flex-direction: column;
+}
+img{
+  max-width: 60%;
+}

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script>
+            var numero = 0;
+            var listElements = 0;
+            var list = [];
+
+
+            function incNumber(){
+                numero++;
+                renderNumber()
+            }
+            function decNumber(){
+                numero--;
+                renderNumber()
+            }
+            function borrarLista(i){
+                list.splice(i,1);
+                renderList()
+            }
+            function sumarList() {
+                listElements++;
+                const list = document.getElementById("milista");
+                list.innerHTML += `<li>Elemento ${listElements}</li>`
+            }
+            function addToList(){
+                const input = document.getElementById("miinput").value;
+                if(!list.includes(input)){
+                    list.push(input)
+                    renderList()
+                }
+
+                document.getElementById("miinput").value = ""
+            }
+            function renderList(){
+                const c = document.getElementById("bloque");
+
+                c.innerHTML = "<ul>";
+                for(var i = 0; i < list.length; i++){
+                    c.innerHTML += `<li>${list[i]} <button id=${i} onclick="borrarLista(${i})">PAPELERA</button> </li>`
+                }
+                c.innerHTML += "</ul>"
+                
+
+
+            }
+        </script>
+        <title>Primer pagina 2024</title>
+        <link rel="stylesheet" type="text/css" href="index.css">
+    </head>
+    <body onload="renderList()">
+        <h1>Primera pagina</h1>
+        <div>Hola! Mi primera pagina</div>
+        <button onclick="addToList()">SUMARLIST</button>
+        <input type="text" id="miinput"/>
+        <button onclick="decNumber()">BJAR</button>
+        <button onclick="incNumber()">SUBIR</button>
+        <div id="bloque"></div>
+    </body>
+
+</html>

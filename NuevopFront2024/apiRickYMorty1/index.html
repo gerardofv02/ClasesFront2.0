@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script>
+            var page = 1;
+            var status = ""
+            var name = ""
+            async function getData(page,status,name){
+
+                const c = document.getElementById("mibuffer")
+                const response = await fetch(`https://rickandmortyapi.com/api/character?page=${page}&status=${status}&name=${name}`);
+                if(response.status != 200){
+                    console.log("Failed to fetch")
+                    return 0;
+                }
+                const data = await response.json();
+                console.log(data)
+
+                for(var i = 0; i < data.results.length; i++){
+                    c.innerHTML += `<div class="micharacter"><h1>${data.results[i].name}</h1><img src="${data.results[i].image}" /> </div> `
+                    console.log(data.results[i].image)
+                }
+                
+
+            }
+            function getWithFilters() {
+                const mistatus = document.getElementById("mistatus").value;
+                const minombre = document.getElementById("minombre").value;
+                page = 1;
+                name = minombre
+                status = mistatus
+                getData(page,status,name)
+            }
+            function borrarFiltros(){
+                document.getElementById("mistatus").value = ""
+                document.getElementById("minombre").value = ""
+                page = 1;
+                name = "";
+                status = "";
+                getData(page,status,name)
+            }
+            function nextPage(){
+                const mistatus = document.getElementById("mistatus").value;
+                const minombre = document.getElementById("minombre").value;
+                name = minombre
+                status = mistatus
+                page++;
+                getData(page,status,name)
+            }
+            function prevPage(){
+                page--;
+                const mistatus = document.getElementById("mistatus").value;
+                const minombre = document.getElementById("minombre").value;
+                name = minombre
+                status = mistatus
+                getData(page,status,name)
+            }
+        </script>
+        <style>
+            #mibuffer{
+                display: grid;
+                grid-template-columns: repeat(4,1fr);
+                padding: 5px;
+
+            }
+            .micharacter{
+                display: flex;
+                flex-direction: column;
+            }
+            img{
+                max-width: 60%;
+            }
+
+        </style>
+    </head>
+    <body onload="getData(page,status,name)">
+        <button onclick="nextPage()">Pagina siguinte</button>
+        <button onclick="prevPage()">Pagina anterior</button>
+        Status: <input type="text" placeholder="Alive" id="mistatus"/>   Name: <input type="text" placeholder="Rick" id="minombre" />
+        <button onclick="getWithFilters()">Buscar</button>  <button onclick="borrarFiltros()">Borrar filtros</button>
+        <div id="mibuffer"></div>
+
+    </body>
+</html>
